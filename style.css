@@ -30,6 +30,12 @@ form div {
 input, textarea, select, button {
     width: 100%;
     box-sizing: border-box;
+    height: 40px; /* 高さを統一 */
+    font-size: 16px;
+}
+
+textarea {
+    height: auto; /* テキストエリアは自動調整 */
 }
 
 button {
