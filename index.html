@@ -6,31 +6,15 @@
     <title>Fire Dispatch System</title>
     <link rel="stylesheet" href="style.css">
     <script defer src="script.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
     <h1>Fire Dispatch System</h1>
-    <nav>
-        <ul>
-            <li><a href="#" onclick="showSection('admin')">Admin Dashboard</a></li>
-            <li><a href="#" onclick="showSection('firefighter')">Firefighter Dashboard</a></li>
-            <li><a href="#" onclick="showSection('report')">Report Emergency</a></li>
-        </ul>
-    </nav>
 
-    <section id="admin" class="hidden">
-        <h2>Admin Dashboard</h2>
-        <h3>Users</h3>
-        <ul id="user-list"></ul>
-        <h3>Emergencies</h3>
-        <ul id="emergency-list"></ul>
-    </section>
+    <div id="map"></div>
 
-    <section id="firefighter" class="hidden">
-        <h2>Firefighter Dashboard</h2>
-        <ul id="firefighter-emergency-list"></ul>
-    </section>
-
-    <section id="report" class="hidden">
+    <section id="report">
         <h2>Report an Emergency</h2>
         <form id="emergency-form">
             <div>
@@ -43,6 +27,13 @@
             </div>
             <button type="submit">Submit</button>
         </form>
+    </section>
+
+    <section id="dispatch" class="hidden">
+        <h2>Dispatch Units</h2>
+        <ul id="dispatch-list"></ul>
+        <button onclick="dispatchUnit('Fire Truck')">Dispatch Fire Truck</button>
+        <button onclick="dispatchUnit('Ambulance')">Dispatch Ambulance</button>
     </section>
 </body>
 </html>
