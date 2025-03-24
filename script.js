@@ -59,6 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const emergencyLon = latestEmergency.lon;
             const initialLat = emergencyLat + (Math.random() * 0.02 - 0.01); // 1km以内のランダムな初期位置
             const initialLon = emergencyLon + (Math.random() * 0.02 - 0.01);
+            const endLat = emergencyLat + (Math.random() * 0.001 - 0.0005); // 50m以内のランダムな到着位置
+            const endLon = emergencyLon + (Math.random() * 0.001 - 0.0005);
             const vehicleMarker = L.marker([initialLat, initialLon], { title: vehicleName }).addTo(map)
                 .bindPopup(`<b>${vehicleType} (${vehicleName})</b><br>移動中...`).openPopup();
 
@@ -87,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 animate();
             };
 
-            moveVehicle(initialLat, initialLon, emergencyLat, emergencyLon, 16000); // 16秒間で移動
+            moveVehicle(initialLat, initialLon, endLat, endLon, 16000); // 16秒間で移動
         }, Math.random() * 5000 + 2000); // 2秒から7秒後に車両のピンを表示
     });
 });
