@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     emergencyForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const location = document.getElementById('location').value;
-        const description = document.getElementById('description').value;
-        const newEmergency = { id: emergencies.length + 1, location, description, status: '保留' };
+        const type = document.getElementById('type').value;
+        const newEmergency = { id: emergencies.length + 1, location, type, status: '保留' };
         emergencies.push(newEmergency);
         alert('緊急通報が正常に送信されました！');
 
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const lat = data[0].lat;
                     const lon = data[0].lon;
                     const marker = L.marker([lat, lon]).addTo(map)
-                        .bindPopup(`<b>${location}</b><br>${description}`).openPopup();
+                        .bindPopup(`<b>${location}</b><br>${type}`).openPopup();
                     map.setView([lat, lon], 13);
                 } else {
                     alert('場所が見つかりませんでした。');
@@ -40,8 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.dispatchUnit = function(unitType) {
         const latestEmergency = emergencies[emergencies.length - 1];
         const dispatchItem = document.createElement('li');
-        dispatchItem.textContent = `${unitType}を${latestEmergency.location}に出動させました`;
+        dispatchItem.textContent = `${unitType}を${latestEmergency.location}に出動させました (${latestEmergency.type})`;
         dispatchList.appendChild(dispatchItem);
-        alert(`${unitType}を${latestEmergency.location}に出動させました`);
+        alert(`${unitType}を${latestEmergency.location}に出動させました (${latestEmergency.type})`);
     }
 });
