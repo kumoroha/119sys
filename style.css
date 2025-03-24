@@ -56,7 +56,14 @@ section {
 #map {
     height: 500px;
     width: 100%;
-    max-width: 1000px; /* 横幅を1000pxまで広げる */
+    max-width: 1200px; /* 横幅を1200pxまで広げる */
     margin-top: 20px;
     border: 1px solid #ccc;
+}
+
+/* スマホのときのみ地図の高さを420pxに設定 */
+@media (max-width: 600px) {
+    #map {
+        height: 420px;
+    }
 }
