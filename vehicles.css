@@ -16,10 +16,11 @@ table {
     width: 80%;
     max-width: 800px;
     margin-top: 20px;
+    border: 2px solid #000; /* テーブル全体を囲む線を追加 */
 }
 
 th, td {
-    border: 1px solid #ccc;
+    border: 1px solid #000; /* 各セルを囲む線を追加 */
     padding: 10px;
     text-align: center;
 }
