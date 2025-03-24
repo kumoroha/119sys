@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const map = L.map('map').setView([35.6895, 139.6917], 13); // Initial view set to Tokyo
+    const map = L.map('map').setView([35.6895, 139.6917], 13); // 初期表示を東京に設定
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -14,23 +14,23 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         const location = document.getElementById('location').value;
         const description = document.getElementById('description').value;
-        const newEmergency = { id: emergencies.length + 1, location, description, status: 'Pending' };
+        const newEmergency = { id: emergencies.length + 1, location, description, status: '保留' };
         emergencies.push(newEmergency);
-        alert('Emergency reported successfully!');
+        alert('緊急通報が正常に送信されました！');
 
-        // Add marker to map
+        // 地図にマーカーを追加
         const marker = L.marker([35.6895, 139.6917]).addTo(map)
             .bindPopup(`<b>${location}</b><br>${description}`).openPopup();
 
-        // Show dispatch section
+        // 指令の欄を表示
         dispatchSection.classList.remove('hidden');
     });
 
     window.dispatchUnit = function(unitType) {
         const latestEmergency = emergencies[emergencies.length - 1];
         const dispatchItem = document.createElement('li');
-        dispatchItem.textContent = `${unitType} dispatched to ${latestEmergency.location}`;
+        dispatchItem.textContent = `${unitType}を${latestEmergency.location}に出動させました`;
         dispatchList.appendChild(dispatchItem);
-        alert(`${unitType} dispatched to ${latestEmergency.location}`);
+        alert(`${unitType}を${latestEmergency.location}に出動させました`);
     }
 });
