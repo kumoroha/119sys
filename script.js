@@ -18,9 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
         emergencies.push(newEmergency);
         alert('緊急通報が正常に送信されました！');
 
-        // 地図にマーカーを追加
-        const marker = L.marker([35.6895, 139.6917]).addTo(map)
-            .bindPopup(`<b>${location}</b><br>${description}`).openPopup();
+        // ジオコーディングを使用して場所を取得し、地図にピンを追加
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    const lat = data[0].lat;
+                    const lon = data[0].lon;
+                    const marker = L.marker([lat, lon]).addTo(map)
+                        .bindPopup(`<b>${location}</b><br>${description}`).openPopup();
+                    map.setView([lat, lon], 13);
+                } else {
+                    alert('場所が見つかりませんでした。');
+                }
+            });
 
         // 指令の欄を表示
         dispatchSection.classList.remove('hidden');
