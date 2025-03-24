@@ -27,7 +27,7 @@ form div {
     width: 100%;
 }
 
-input, textarea, button {
+input, textarea, select, button {
     width: 100%;
     box-sizing: border-box;
 }
