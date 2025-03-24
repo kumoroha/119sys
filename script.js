@@ -15,27 +15,28 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         const location = document.getElementById('location').value;
         const type = document.getElementById('type').value;
-        const newEmergency = { id: emergencies.length + 1, location, type, status: '保留' };
-        emergencies.push(newEmergency);
-        alert('緊急通報が正常に送信されました！');
-
-        // ジオコーディングを使用して場所を取得し、地図にピンを追加
+        
+        // ジオコーディングを使用して場所を取得
         fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`)
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0) {
-                    const lat = data[0].lat;
-                    const lon = data[0].lon;
+                    const lat = parseFloat(data[0].lat);
+                    const lon = parseFloat(data[0].lon);
+                    const newEmergency = { id: emergencies.length + 1, location, type, lat, lon, status: '保留' };
+                    emergencies.push(newEmergency);
+                    alert('緊急通報が正常に送信されました！');
+
                     const marker = L.marker([lat, lon]).addTo(map)
                         .bindPopup(`<b>${location}</b><br>${type}`).openPopup();
                     map.setView([lat, lon], 13);
+
+                    // 指令の欄を表示
+                    dispatchSection.classList.remove('hidden');
                 } else {
                     alert('場所が見つかりませんでした。');
                 }
             });
-
-        // 指令の欄を表示
-        dispatchSection.classList.remove('hidden');
     });
 
     dispatchForm.addEventListener('submit', (event) => {
@@ -43,6 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const vehicleType = document.getElementById('vehicle-type').value;
         const vehicleName = document.getElementById('vehicle-name').value;
         const latestEmergency = emergencies[emergencies.length - 1];
+        if (!latestEmergency) {
+            alert('緊急通報がありません。');
+            return;
+        }
         const dispatchItem = document.createElement('li');
         dispatchItem.textContent = `${vehicleType} (${vehicleName}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`;
         dispatchList.appendChild(dispatchItem);
@@ -50,8 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 車両のピンを現場の周囲に表示し、移動させる
         setTimeout(() => {
-            const emergencyLat = parseFloat(latestEmergency.lat);
-            const emergencyLon = parseFloat(latestEmergency.lon);
+            const emergencyLat = latestEmergency.lat;
+            const emergencyLon = latestEmergency.lon;
             const initialLat = emergencyLat + (Math.random() * 0.02 - 0.01); // 1km以内のランダムな初期位置
             const initialLon = emergencyLon + (Math.random() * 0.02 - 0.01);
             const vehicleMarker = L.marker([initialLat, initialLon], { title: vehicleName }).addTo(map)
