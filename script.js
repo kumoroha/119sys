@@ -47,5 +47,42 @@ document.addEventListener('DOMContentLoaded', () => {
         dispatchItem.textContent = `${vehicleType} (${vehicleName}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`;
         dispatchList.appendChild(dispatchItem);
         alert(`${vehicleType} (${vehicleName}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`);
+
+        // 車両のピンを現場の周囲に表示し、移動させる
+        setTimeout(() => {
+            const emergencyLat = parseFloat(latestEmergency.lat);
+            const emergencyLon = parseFloat(latestEmergency.lon);
+            const initialLat = emergencyLat + (Math.random() * 0.02 - 0.01); // 1km以内のランダムな初期位置
+            const initialLon = emergencyLon + (Math.random() * 0.02 - 0.01);
+            const vehicleMarker = L.marker([initialLat, initialLon], { title: vehicleName }).addTo(map)
+                .bindPopup(`<b>${vehicleType} (${vehicleName})</b><br>移動中...`).openPopup();
+
+            // 16秒間で車両を移動させる
+            const moveVehicle = (startLat, startLon, endLat, endLon, duration) => {
+                const startTime = new Date().getTime();
+                const animate = () => {
+                    const currentTime = new Date().getTime();
+                    const elapsedTime = currentTime - startTime;
+                    const progress = elapsedTime / duration;
+                    if (progress < 1) {
+                        const currentLat = startLat + (endLat - startLat) * progress;
+                        const currentLon = startLon + (endLon - startLon) * progress;
+                        vehicleMarker.setLatLng([currentLat, currentLon]);
+                        requestAnimationFrame(animate);
+                    } else {
+                        vehicleMarker.setLatLng([endLat, endLon]);
+                        vehicleMarker.bindPopup(`<b>${vehicleType} (${vehicleName})</b><br>作業中...`).openPopup();
+
+                        // 作業中表示後、数秒後にピンを消す
+                        setTimeout(() => {
+                            map.removeLayer(vehicleMarker);
+                        }, Math.random() * 5000 + 10000); // 10秒から15秒の間でピンを消す
+                    }
+                };
+                animate();
+            };
+
+            moveVehicle(initialLat, initialLon, emergencyLat, emergencyLon, 16000); // 16秒間で移動
+        }, Math.random() * 5000 + 2000); // 2秒から7秒後に車両のピンを表示
     });
 });
