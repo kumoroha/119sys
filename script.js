@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const map = L.map('map').setView([35.6895, 139.6917], 13); // 初期表示を東京に設定
+    const map = L.map('map').setView([34.6937, 135.5023], 13); // 初期表示を大阪に設定
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
