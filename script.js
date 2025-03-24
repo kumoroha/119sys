@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const emergencyForm = document.getElementById('emergency-form');
     const dispatchSection = document.getElementById('dispatch');
     const dispatchList = document.getElementById('dispatch-list');
+    const dispatchForm = document.getElementById('dispatch-form');
     const emergencies = [];
 
     emergencyForm.addEventListener('submit', (event) => {
@@ -37,11 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
         dispatchSection.classList.remove('hidden');
     });
 
-    window.dispatchUnit = function(unitType) {
+    dispatchForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const vehicleType = document.getElementById('vehicle-type').value;
+        const vehicleName = document.getElementById('vehicle-name').value;
         const latestEmergency = emergencies[emergencies.length - 1];
         const dispatchItem = document.createElement('li');
-        dispatchItem.textContent = `${unitType}を${latestEmergency.location}に出動させました (${latestEmergency.type})`;
+        dispatchItem.textContent = `${vehicleType} (${vehicleName}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`;
         dispatchList.appendChild(dispatchItem);
-        alert(`${unitType}を${latestEmergency.location}に出動させました (${latestEmergency.type})`);
-    }
+        alert(`${vehicleType} (${vehicleName}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`);
+    });
 });
