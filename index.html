@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fire Dispatch System</title>
+    <title>消防指令システム</title>
     <link rel="stylesheet" href="style.css">
     <script defer src="script.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
-    <h1>Fire Dispatch System</h1>
+    <h1>消防指令システム</h1>
 
     <div id="map"></div>
 
     <section id="report">
-        <h2>Report an Emergency</h2>
+        <h2>緊急通報</h2>
         <form id="emergency-form">
             <div>
-                <label for="location">Location:</label>
+                <label for="location">場所:</label>
                 <input type="text" id="location" name="location" required>
             </div>
             <div>
-                <label for="description">Description:</label>
+                <label for="description">説明:</label>
                 <textarea id="description" name="description" required></textarea>
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit">送信</button>
         </form>
     </section>
 
     <section id="dispatch" class="hidden">
-        <h2>Dispatch Units</h2>
+        <h2>指令</h2>
         <ul id="dispatch-list"></ul>
-        <button onclick="dispatchUnit('Fire Truck')">Dispatch Fire Truck</button>
-        <button onclick="dispatchUnit('Ambulance')">Dispatch Ambulance</button>
+        <button onclick="dispatchUnit('消防車')">消防車を出動させる</button>
+        <button onclick="dispatchUnit('救急車')">救急車を出動させる</button>
     </section>
 </body>
 </html>
