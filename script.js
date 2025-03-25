@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const marker = L.marker([lat, lon]).addTo(map)
                         .bindPopup(`<b>${location}</b><br>${type}`).openPopup();
-                    map.setView([lat, lon], 13);
+                    map.setView([lat, lon], 17); // ピンが表示された時のズーム度を17に設定
 
                     // 指令の欄を表示
                     dispatchSection.classList.remove('hidden');
@@ -43,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         const vehicleType = document.getElementById('vehicle-type').value;
         const vehicleName = document.getElementById('vehicle-name').value;
+        const assistanceRequest = document.getElementById('assistance-request').value;
+        const assistanceType = document.getElementById('assistance-type').value;
         const latestEmergency = emergencies[emergencies.length - 1];
         if (!latestEmergency) {
             alert('緊急通報がありません。');
@@ -52,6 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
         dispatchItem.textContent = `${vehicleType} (${vehicleName}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`;
         dispatchList.appendChild(dispatchItem);
         alert(`${vehicleType} (${vehicleName}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`);
+
+        if (assistanceRequest) {
+            const assistanceItem = document.createElement('li');
+            assistanceItem.textContent = `他局への応援要請: ${assistanceRequest} (${assistanceType || '部隊の種類未指定'}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`;
+            dispatchList.appendChild(assistanceItem);
+            alert(`他局への応援要請: ${assistanceRequest} (${assistanceType || '部隊の種類未指定'}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`);
+        }
 
         // 車両のピンを現場の周囲に表示し、移動させる
         setTimeout(() => {
