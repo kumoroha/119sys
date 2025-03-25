@@ -6,10 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }).addTo(map);
 
     const emergencyForm = document.getElementById('emergency-form');
+    const confirmationSection = document.getElementById('confirmation');
     const dispatchSection = document.getElementById('dispatch');
     const dispatchList = document.getElementById('dispatch-list');
     const dispatchForm = document.getElementById('dispatch-form');
+    const confirmDisasterBtn = document.getElementById('confirm-disaster');
+    const cancelReportBtn = document.getElementById('cancel-report');
     const emergencies = [];
+    let currentMarker;
 
     emergencyForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -27,16 +31,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     emergencies.push(newEmergency);
                     alert('緊急通報が正常に送信されました！');
 
-                    const marker = L.marker([lat, lon]).addTo(map)
+                    currentMarker = L.marker([lat, lon], { icon: createMarkerIcon('yellow') }).addTo(map)
                         .bindPopup(`<b>${location}</b><br>${type}`).openPopup();
                     map.setView([lat, lon], 17); // ピンが表示された時のズーム度を17に設定
 
-                    // 指令の欄を表示
-                    dispatchSection.classList.remove('hidden');
+                    // 確認のセクションを表示
+                    confirmationSection.classList.remove('hidden');
                 } else {
                     alert('場所が見つかりませんでした。');
                 }
             });
+    });
+
+    confirmDisasterBtn.addEventListener('click', () => {
+        if (currentMarker) {
+            currentMarker.setIcon(createMarkerIcon('red'));
+            confirmationSection.classList.add('hidden');
+            dispatchSection.classList.remove('hidden');
+        }
+    });
+
+    cancelReportBtn.addEventListener('click', () => {
+        if (currentMarker) {
+            map.removeLayer(currentMarker);
+            confirmationSection.classList.add('hidden');
+        }
     });
 
     dispatchForm.addEventListener('submit', (event) => {
@@ -101,4 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
             moveVehicle(initialLat, initialLon, endLat, endLon, 16000); // 16秒間で移動
         }, Math.random() * 5000 + 2000); // 2秒から7秒後に車両のピンを表示
     });
+
+    function createMarkerIcon(color) {
+        return L.divIcon({
+            className: 'custom-marker',
+            html: `<div style="background-color: ${color}; width: 24px; height: 24px; border-radius: 50%;"></div>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 24],
+            popupAnchor: [0, -24]
+        });
+    }
 });
