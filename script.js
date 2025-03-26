@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createReportIcon() {
         return L.divIcon({
             className: 'custom-marker',
-            html: `<div style="border: 3px solid yellow; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">通</div>`,
+            html: `<div style="border: 3px solid yellow; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: yellow;">通</div>`,
             iconSize: [16, 16],
             iconAnchor: [8, 16],
             popupAnchor: [0, -16]
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createDisasterIcon() {
         return L.divIcon({
             className: 'custom-marker',
-            html: `<div style="border: 3px solid red; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">災</div>`,
+            html: `<div style="border: 3px solid red; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: red;">災</div>`,
             iconSize: [16, 16],
             iconAnchor: [8, 16],
             popupAnchor: [0, -16]
