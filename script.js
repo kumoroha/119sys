@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     emergencies.push(newEmergency);
                     alert('緊急通報が正常に送信されました！');
 
-                    currentMarker = L.marker([lat, lon], { icon: createMarkerIcon('yellow') }).addTo(map)
+                    currentMarker = L.marker([lat, lon], { icon: createReportIcon() }).addTo(map)
                         .bindPopup(`<b>${location}</b><br>${type}`).openPopup();
                     map.setView([lat, lon], 17); // ピンが表示された時のズーム度を17に設定
 
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     confirmDisasterBtn.addEventListener('click', () => {
         if (currentMarker) {
-            currentMarker.setIcon(createMarkerIcon('red'));
+            currentMarker.setIcon(createDisasterIcon());
             confirmationSection.classList.add('hidden');
             dispatchSection.classList.remove('hidden');
         }
@@ -131,12 +131,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function createReportIcon() {
+        return L.divIcon({
+            className: 'custom-marker',
+            html: `<div style="border: 3px solid yellow; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">通</div>`,
+            iconSize: [16, 16],
+            iconAnchor: [8, 16],
+            popupAnchor: [0, -16]
+        });
+    }
+
+    function createDisasterIcon() {
+        return L.divIcon({
+            className: 'custom-marker',
+            html: `<div style="border: 3px solid red; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">災</div>`,
+            iconSize: [16, 16],
+            iconAnchor: [8, 16],
+            popupAnchor: [0, -16]
+        });
+    }
+
     function createVehicleMarkerIcon(vehicleType) {
-        let color, text;
+        let color, text, textColor = 'black';
         switch (vehicleType) {
             case '消防車':
                 color = 'red';
                 text = '消';
+                textColor = 'white';
                 break;
             case '救急車':
                 color = 'white';
@@ -157,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return L.divIcon({
             className: 'custom-marker',
-            html: `<div style="background-color: ${color}; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">${text}</div>`,
+            html: `<div style="background-color: ${color}; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: ${textColor};">${text}</div>`,
             iconSize: [16, 16],
             iconAnchor: [8, 16],
             popupAnchor: [0, -16]
