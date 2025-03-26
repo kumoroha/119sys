@@ -124,10 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function createMarkerIcon(color) {
         return L.divIcon({
             className: 'custom-marker',
-            html: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%;"></div>`,
-            iconSize: [20, 20],
-            iconAnchor: [10, 20],
-            popupAnchor: [0, -20]
+            html: `<div style="background-color: ${color}; width: 16px; height: 16px; border-radius: 50%;"></div>`,
+            iconSize: [16, 16],
+            iconAnchor: [8, 16],
+            popupAnchor: [0, -16]
         });
     }
 });
