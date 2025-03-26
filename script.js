@@ -76,15 +76,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (assistanceRequest) {
             const assistanceItem = document.createElement('li');
-            assistanceItem.textContent = `他局への応援要請: ${assistanceRequest} (${assistanceType || '部隊の種類未指定'}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`;
+            assistanceItem.textContent = `他局への応援要請: ${assistanceRequest} (${assistanceType || '部隊の種類未指定'}) を ${latestEmergency.location} に出動させました (${最新の緊急.type})`;
             dispatchList.appendChild(assistanceItem);
-            alert(`他局への応援要請: ${assistanceRequest} (${assistanceType || '部隊の種類未指定'}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`);
+            alert(`他局への応援要請: ${assistanceRequest} (${assistanceType || '部隊の種類未指定'}) を ${最新の緊急.location} に出動させました (${最新の緊急.type})`);
         }
 
         // 車両のピンを現場の周囲に表示し、移動させる
         setTimeout(() => {
-            const emergencyLat = latestEmergency.lat;
-            const emergencyLon = latestEmergency.lon;
+            const emergencyLat = 最新の緊急.lat;
+            const emergencyLon = 最新の緊急.lon;
             const initialLat = emergencyLat + (Math.random() * 0.02 - 0.01); // 1km以内のランダムな初期位置
             const initialLon = emergencyLon + (Math.random() * 0.02 - 0.01);
             const endLat = emergencyLat + (Math.random() * 0.001 - 0.0005); // 50m以内のランダムな到着位置
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createReportIcon() {
         return L.divIcon({
-            className: 'custom-marker',
+            className: 'report-marker',
             html: `<div style="border: 3px solid yellow; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: yellow;">通</div>`,
             iconSize: [16, 16],
             iconAnchor: [8, 16],
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createDisasterIcon() {
         return L.divIcon({
-            className: 'custom-marker',
+            className: 'disaster-marker',
             html: `<div style="border: 3px solid red; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: red;">災</div>`,
             iconSize: [16, 16],
             iconAnchor: [8, 16],
