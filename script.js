@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const initialLon = emergencyLon + (Math.random() * 0.02 - 0.01);
             const endLat = emergencyLat + (Math.random() * 0.001 - 0.0005); // 50m以内のランダムな到着位置
             const endLon = emergencyLon + (Math.random() * 0.001 - 0.0005);
-            const vehicleMarker = L.marker([initialLat, initialLon], { title: vehicleName }).addTo(map)
+            const vehicleMarker = L.marker([initialLat, initialLon], { icon: createVehicleMarkerIcon(vehicleType) }).addTo(map)
                 .bindPopup(`<b>${vehicleType} (${vehicleName})</b><br>移動中...`).openPopup();
 
             // 16秒間で車両を移動させる
@@ -125,6 +125,39 @@ document.addEventListener('DOMContentLoaded', () => {
         return L.divIcon({
             className: 'custom-marker',
             html: `<div style="background-color: ${color}; width: 16px; height: 16px; border-radius: 50%;"></div>`,
+            iconSize: [16, 16],
+            iconAnchor: [8, 16],
+            popupAnchor: [0, -16]
+        });
+    }
+
+    function createVehicleMarkerIcon(vehicleType) {
+        let color, text;
+        switch (vehicleType) {
+            case '消防車':
+                color = 'red';
+                text = '消';
+                break;
+            case '救急車':
+                color = 'white';
+                text = '救';
+                break;
+            case '救助工作車':
+                color = 'orange';
+                text = 'レ';
+                break;
+            case 'ヘリコプター':
+                color = 'skyblue';
+                text = 'ヘ';
+                break;
+            default:
+                color = 'lightgray';
+                text = '他';
+                break;
+        }
+        return L.divIcon({
+            className: 'custom-marker',
+            html: `<div style="background-color: ${color}; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">${text}</div>`,
             iconSize: [16, 16],
             iconAnchor: [8, 16],
             popupAnchor: [0, -16]
