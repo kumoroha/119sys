@@ -297,6 +297,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 color = 'skyblue';
                 text = 'ヘ';
                 break;
+            case 'ポンプ車':
+                color = 'red';
+                text = 'ポ';
+                textColor = 'white';
+                break;
+            case 'はしご車':
+                color = 'red';
+                text = '梯';
+                textColor = 'white';
+                break;
+            case '水槽車':
+                color = 'red';
+                text = '水';
+                textColor = 'white';
+                break;
+            case '化学車':
+                color = 'red';
+                text = '化';
+                textColor = 'white';
+                break;
+            case '指揮車':
+                color = 'red';
+                text = '指';
+                textColor = 'white';
+                break;
             default:
                 color = 'lightgray';
                 text = '他';
