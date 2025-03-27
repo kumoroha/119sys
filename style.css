@@ -77,3 +77,7 @@ section {
 .report-marker, .disaster-marker {
     border: none;
 }
+
+.vehicle-marker {
+    border: 2px solid #fff;
+}
