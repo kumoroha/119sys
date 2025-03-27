@@ -250,30 +250,30 @@ document.addEventListener('DOMContentLoaded', () => {
     function createMarkerIcon(color) {
         return L.divIcon({
             className: 'custom-marker',
-            html: `<div style="background-color: ${color}; width: 16px; height: 16px; border-radius: 50%;"></div>`,
-            iconSize: [16, 16],
-            iconAnchor: [8, 16],
-            popupAnchor: [0, -16]
+            html: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%;"></div>`,
+            iconSize: [20, 20],
+            iconAnchor: [8, 20],
+            popupAnchor: [0, -20]
         });
     }
 
     function createReportIcon() {
         return L.divIcon({
             className: 'report-marker',
-            html: `<div style="border: 3px solid yellow; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: yellow;">通</div>`,
-            iconSize: [16, 16],
-            iconAnchor: [8, 16],
-            popupAnchor: [0, -16]
+            html: `<div style="border: 3px solid yellow; width: 20px; height: 20px; border-radius: 50%; font-size: 1.3em; display: flex; align-items: center; justify-content: center; font-weight: bold; color: yellow;">通</div>`,
+            iconSize: [20, 20],
+            iconAnchor: [8, 20],
+            popupAnchor: [0, -20]
         });
     }
 
     function createDisasterIcon() {
         return L.divIcon({
             className: 'disaster-marker',
-            html: `<div style="border: 3px solid red; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: red;">災</div>`,
-            iconSize: [16, 16],
-            iconAnchor: [8, 16],
-            popupAnchor: [0, -16]
+            html: `<div style="border: 3px solid red; width: 20px; height: 20px; border-radius: 50%; font-size: 1.3em; display: flex; align-items: center; justify-content: center; font-weight: bold; color: red;">災</div>`,
+            iconSize: [20, 20],
+            iconAnchor: [8, 20],
+            popupAnchor: [0, -20]
         });
     }
 
@@ -304,10 +304,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return L.divIcon({
             className: 'vehicle-marker',
-            html: `<div style="background-color: ${color}; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: ${textColor};">${text}</div>`,
-            iconSize: [16, 16],
-            iconAnchor: [8, 16],
-            popupAnchor: [0, -16]
+            html: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: ${textColor};">${text}</div>`,
+            iconSize: [20, 20],
+            iconAnchor: [8, 20],
+            popupAnchor: [0, -20]
         });
     }
 });
