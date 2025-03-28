@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return L.divIcon({
             className: 'vehicle-marker',
-            html: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: ${textColor};">${text}</div>`,
+            html: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%; font-size: 1.2em; display: flex; align-items: center; justify-content: center; font-weight: bold; color: ${textColor};">${text}</div>`,
             iconSize: [20, 20],
             iconAnchor: [8, 20],
             popupAnchor: [0, -20]
