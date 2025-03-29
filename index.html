@@ -52,7 +52,14 @@
             <div>
                 <label for="vehicle-type">車両の種類:</label>
                 <select id="vehicle-type" name="vehicle-type">
-                    <option value="消防車">消防車</option>
+                    <option value="">選択してください</option>
+                    <optgroup label="消防車">
+                        <option value="ポンプ車">ポンプ車</option>
+                        <option value="はしご車">はしご車</option>
+                        <option value="化学車">化学車</option>
+                        <option value="指揮車">指揮車</option>
+                        <option value="水槽車">水槽車</option>
+                    </optgroup>
                     <option value="救急車">救急車</option>
                     <option value="救助工作車">救助工作車</option>
                     <option value="ヘリコプター">ヘリコプター</option>
@@ -72,11 +79,11 @@
                 <select id="assistance-type" name="assistance-type">
                     <option value="">選択してください</option>
                     <optgroup label="消防車">
-                        <option value="はしご車">はしご車</option>
-                        <option value="水槽車">水槽車</option>
                         <option value="ポンプ車">ポンプ車</option>
+                        <option value="はしご車">はしご車</option>
                         <option value="化学車">化学車</option>
                         <option value="指揮車">指揮車</option>
+                        <option value="水槽車">水槽車</option>
                     </optgroup>
                     <option value="救急車">救急車</option>
                     <option value="救助工作車">救助工作車</option>
