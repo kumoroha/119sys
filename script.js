@@ -73,6 +73,30 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        const moveVehicle = (marker, startLat, startLon, endLat, endLon, duration, type, name) => {
+            const startTime = new Date().getTime();
+            const animate = () => {
+                const currentTime = new Date().getTime();
+                const elapsedTime = currentTime - startTime;
+                const progress = elapsedTime / duration;
+                if (progress < 1) {
+                    const currentLat = startLat + (endLat - startLat) * progress;
+                    const currentLon = startLon + (endLon - startLon) * progress;
+                    marker.setLatLng([currentLat, currentLon]);
+                    requestAnimationFrame(animate);
+                } else {
+                    marker.setLatLng([endLat, endLon]);
+                    marker.bindPopup(`<b>${type} (${name})</b><br>作業中...`).openPopup();
+
+                    // 作業中表示後、数秒後にピンを消す
+                    setTimeout(() => {
+                        map.removeLayer(marker);
+                    }, Math.random() * 5000 + 10000); // 10秒から15秒の間でピンを消す
+                }
+            };
+            animate();
+        };
+
         if (!vehicleName && assistanceRequest) {
             // 応援車両のみ出動させる
             const assistanceItem = document.createElement('li');
@@ -91,32 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const assistanceMarker = L.marker([initialLat, initialLon], { icon: createVehicleMarkerIcon(assistanceType) }).addTo(map)
                     .bindPopup(`<b>${assistanceType} (${assistanceRequest})</b><br>移動中...`).openPopup();
 
-                // 32秒間で車両を移動させる
-                const moveVehicle = (startLat, startLon, endLat, endLon, duration) => {
-                    const startTime = new Date().getTime();
-                    const animate = () => {
-                        const currentTime = new Date().getTime();
-                        const elapsedTime = currentTime - startTime;
-                        const progress = elapsedTime / duration;
-                        if (progress < 1) {
-                            const currentLat = startLat + (endLat - startLat) * progress;
-                            const currentLon = startLon + (endLon - startLon) * progress;
-                            assistanceMarker.setLatLng([currentLat, currentLon]);
-                            requestAnimationFrame(animate);
-                        } else {
-                            assistanceMarker.setLatLng([endLat, endLon]);
-                            assistanceMarker.bindPopup(`<b>${assistanceType} (${assistanceRequest})</b><br>作業中...`).openPopup();
-
-                            // 作業中表示後、数秒後にピンを消す
-                            setTimeout(() => {
-                                map.removeLayer(assistanceMarker);
-                            }, Math.random() * 5000 + 10000); // 10秒から15秒の間でピンを消す
-                        }
-                    };
-                    animate();
-                };
-
-                moveVehicle(initialLat, initialLon, endLat, endLon, 32000); // 32秒間で移動
+                moveVehicle(assistanceMarker, initialLat, initialLon, endLat, endLon, Math.random() * 28000 + 32000, assistanceType, assistanceRequest); // 32秒から60秒間で移動
             }, Math.random() * 5000 + 2000); // 2秒から7秒後に車両のピンを表示
         } else {
             if (vehicleName) {
@@ -136,32 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const vehicleMarker = L.marker([initialLat, initialLon], { icon: createVehicleMarkerIcon(vehicleType) }).addTo(map)
                         .bindPopup(`<b>${vehicleType} (${vehicleName})</b><br>移動中...`).openPopup();
 
-                    // 32秒間で車両を移動させる
-                    const moveVehicle = (startLat, startLon, endLat, endLon, duration) => {
-                        const startTime = new Date().getTime();
-                        const animate = () => {
-                            const currentTime = new Date().getTime();
-                            const elapsedTime = currentTime - startTime;
-                            const progress = elapsedTime / duration;
-                            if (progress < 1) {
-                                const currentLat = startLat + (endLat - startLat) * progress;
-                                const currentLon = startLon + (endLon - startLon) * progress;
-                                vehicleMarker.setLatLng([currentLat, currentLon]);
-                                requestAnimationFrame(animate);
-                            } else {
-                                vehicleMarker.setLatLng([endLat, endLon]);
-                                vehicleMarker.bindPopup(`<b>${vehicleType} (${vehicleName})</b><br>作業中...`).openPopup();
-
-                                // 作業中表示後、数秒後にピンを消す
-                                setTimeout(() => {
-                                    map.removeLayer(vehicleMarker);
-                                }, Math.random() * 5000 + 10000); // 10秒から15秒の間でピンを消す
-                            }
-                        };
-                        animate();
-                    };
-
-                    moveVehicle(initialLat, initialLon, endLat, endLon, 32000); // 32秒間で移動
+                    moveVehicle(vehicleMarker, initialLat, initialLon, endLat, endLon, Math.random() * 28000 + 32000, vehicleType, vehicleName); // 32秒から60秒間で移動
                 }, Math.random() * 5000 + 2000); // 2秒から7秒後に車両のピンを表示
             }
 
@@ -169,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const assistanceItem = document.createElement('li');
                 assistanceItem.textContent = `他局への応援要請: ${assistanceRequest} (${assistanceType || '部隊の種類未指定'}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`;
                 dispatchList.appendChild(assistanceItem);
-                alert(`他局への応援要請: ${assistanceRequest} (${assistanceType || '部隊の種類未指定'}) を ${latestEmergency.location} に出動させました (${最新の緊急.type})`);
+                alert(`他局への応援要請: ${assistanceRequest} (${assistanceType || '部隊の種類未指定'}) を ${latestEmergency.location} に出動させました (${latestEmergency.type})`);
 
                 // 応援車両のピンを現場の周囲に表示し、移動させる
                 setTimeout(() => {
@@ -182,32 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const assistanceMarker = L.marker([initialLat, initialLon], { icon: createVehicleMarkerIcon(assistanceType) }).addTo(map)
                         .bindPopup(`<b>${assistanceType} (${assistanceRequest})</b><br>移動中...`).openPopup();
 
-                    // 32秒間で車両を移動させる
-                    const moveVehicle = (startLat, startLon, endLat, endLon, duration) => {
-                        const startTime = new Date().getTime();
-                        const animate = () => {
-                            const currentTime = new Date().getTime();
-                            const elapsedTime = currentTime - startTime;
-                            const progress = elapsedTime / duration;
-                            if (progress < 1) {
-                                const currentLat = startLat + (endLat - startLat) * progress;
-                                const currentLon = startLon + (endLon - startLon) * progress;
-                                assistanceMarker.setLatLng([currentLat, currentLon]);
-                                requestAnimationFrame(animate);
-                            } else {
-                                assistanceMarker.setLatLng([endLat, endLon]);
-                                assistanceMarker.bindPopup(`<b>${assistanceType} (${assistanceRequest})</b><br>作業中...`).openPopup();
-
-                                // 作業中表示後、数秒後にピンを消す
-                                setTimeout(() => {
-                                    map.removeLayer(assistanceMarker);
-                                }, Math.random() * 5000 + 10000); // 10秒から15秒の間でピンを消す
-                            }
-                        };
-                        animate();
-                    };
-
-                    moveVehicle(initialLat, initialLon, endLat, endLon, 32000); // 32秒間で移動
+                    moveVehicle(assistanceMarker, initialLat, initialLon, endLat, endLon, Math.random() * 28000 + 32000, assistanceType, assistanceRequest); // 32秒から60秒間で移動
                 }, Math.random() * 5000 + 2000); // 2秒から7秒後に車両のピンを表示
             }
         }
