@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const map = L.map('map').setView([34.6937, 135.5023], 11); // 初期表示を大阪に設定し、ズーム度を11に設定
 
+    L.control.scale({
+        metric: true,       // メートル/キロメートル表示
+        imperial: false,    // フィート/マイル表示を非表示
+        maxWidth: 100       // スケールバーの最大幅を100ピクセルに設定
+    }).addTo(map);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
